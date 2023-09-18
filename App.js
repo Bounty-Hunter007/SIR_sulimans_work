@@ -1,58 +1,82 @@
-import logo from './maxresdefault.jpg';
 import './App.css';
+import { useState } from 'react';
 
 function App() {
+                                      //states
+  const [list, setList] = useState([]);
+  const [userInput, setUserInput] = useState('');
+  const [editIndex, setEditIndex] = useState(-1); // Initialize with -1 to indicate no editing
 
+  function addItem() {
+    const tempList = [...list];
+    tempList.push(userInput);
+    setList(tempList);
+    setUserInput('');
+  }
 
-  const name = "Hello World";
+  function UserInput_func(e) {
+    setUserInput(e.target.value);
+  }
 
-  const obj = {name: "Hello World Object"}
+  function deleteItem(index) {
+    const tempList = [...list];
+    tempList.splice(index, 1);
+    setList(tempList);
+  }
 
-  const data = ['We', 'are', 'United'] //Show these in seperate tags
+  function delete_All_func(index) {
+    const tempList = [...list];
+    tempList.splice( 0, tempList.length);
+    setList(tempList);
+  }
+  function editItem(index) {
+    setEditIndex(index); // Set the index of the item being edited
+    setUserInput(list[index]); // Populate the input field with the current item text
+  }
 
-  const list = [{name: "Hello World 1"}, {name: "Hello World 2"}, {name: "Hello World 3"}] //Show these in seperate tags
-  
-  const complex = [{company: 'XYZ', jobs: ['Javascript' ,'React']}, {company: 'ABC', jobs: ['AngularJs' ,'Ionic']}] //Show these in a Table
+  function saveEdit(index) {
+    const tempList = [...list];
+    tempList[index] = userInput;
+    setList(tempList);
+    setEditIndex(-1); // Reset the edit index to indicate no editing
+    setUserInput('');
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          {name}
-        </p>
+        <h1>TO-DO LIST</h1>
 
-        <p>
-        {obj.name}
-        </p>
+        <body>
+          <p>
+            <p>
+              <input onChange={UserInput_func} placeholder='Enter items' value={userInput} />
+              {editIndex === -1 //CONDITIONAL randering
+              ? ( <button onClick={addItem}>ADD ITEM</button>) //ternary operator
+              : ( <button onClick={() => saveEdit(editIndex)}>SAVE</button>)//ternary operator
+              } 
+              {<button onClick={delete_All_func}>DELETE ALL</button> }
+            </p>
+            <ol>
+              {list.map(function (item, index) {
+                return (
+                  <li key={index}>
+                    {index === editIndex//CONDITIONAL randering
+                     ? ( <input value={userInput} onChange={(e) => setUserInput(e.target.value)} />) //ternary operator
+                     : (item)//ternary operator
+                    }
+                    <button onClick={() => deleteItem(index)}>DELETE</button>
 
-        <ol>
-          {data.map(function (item) {
-           return <li>{item} </li> 
-          })} 
-        </ol>
-
-        <ol>
-          {list.map(function (item) {
-           return <li>{item.name} </li> 
-          })} 
-        </ol>
-
-        <table border={1}>
-          <tr>
-            <th>company</th>
-            <th>jobs</th>
-          </tr>
-          {
-            complex.map(function(item){
-
-              return <tr> 
-                <td>{item.company}</td>
-                <td>{item.jobs}</td>
-              </tr>
-            })
-          }
-         
-        </table>
-
+                    {index === editIndex //CONDITIONAL randering
+                    ? ( <button onClick={() => saveEdit(index)}>SAVE</button>) //ternary opeator
+                    : ( <button onClick={() => editItem(index)}>EDIT</button>) //ternary opeator
+                    }
+                  </li>
+                );
+              })}
+            </ol>
+          </p>
+        </body>
       </header>
     </div>
   );
