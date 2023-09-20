@@ -1,0 +1,232 @@
+/* App.css */
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-image: url(images/Dreamscape.png);
+}
+
+.main_container {
+  height: inherit;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.task-card {
+  width: 750px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  background: transparent;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px black;
+  display: flex;
+  /* Add flex display */
+  flex-direction: column;
+  /* Stack the sections vertically */
+  min-height: 30vh;
+  /* Set a minimum height */
+}
+
+.task-list-header {
+  margin-bottom: 20px;
+  color: rgb(255, 255, 255);
+  text-align: center;
+}
+
+#new-task-input {
+  margin-bottom: 30px;
+  background: none;
+  border: none;
+  outline: none;
+  width: 70%;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 10px;
+  box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+  color: #fff;
+  flex-wrap: wrap;
+  display: inline-flex;
+  background-color: transparent;
+  color: white;
+  size-adjust: 20px;
+}
+
+#new-task-input::placeholder {
+  color: aliceblue;
+
+}
+
+#new-task-submit {
+  border-radius: 10px;
+  background-color: transparent;
+  backdrop-filter: blur(10px);
+  /* Add a backdrop blur */
+  -webkit-backdrop-filter: blur(10px);
+  /* For Safari */
+  /* Hover effect */
+  transition: background-color 0.3s ease;
+  /* Smooth transition */
+}
+
+#new-task-submit:hover {
+  background-color: rgba(253, 236, 0, 0.253);
+  color: rgb(2, 2, 2);
+
+}
+
+#new-task-update {
+  border-radius: 10px;
+  background-color: transparent;
+  backdrop-filter: blur(10px);
+  /* Add a backdrop blur */
+  -webkit-backdrop-filter: blur(10px);
+  /* For Safari */
+  /* Hover effect */
+  transition: background-color 0.3s ease;
+  /* Smooth transition */
+}
+
+#new-task-update:hover {
+  background-color: rgba(37, 18, 88, 0.253);
+  color: rgb(2, 2, 2);
+
+}
+
+#new-task-REMOVE_ALL {
+  border-radius: 10px;
+  background-color: transparent;
+  backdrop-filter: blur(10px);
+  /* Add a backdrop blur */
+  -webkit-backdrop-filter: blur(10px);
+  /* For Safari */
+  /* Hover effect */
+  transition: background-color 0.3s ease;
+  /* Smooth transition */
+}
+
+#new-task-REMOVE_ALL:hover {
+  background-color: rgba(253, 0, 0, 0.253);
+  color: rgb(2, 2, 2);
+}
+
+.H2 {
+  text-align: center;
+}
+
+.task-list {
+  border-top: 1px solid #ffffff;
+  color: rgb(255, 255, 255);
+  text-justify: newspaper;
+}
+
+.task-item .task-text {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+#tasks_ol {
+  max-height: 300px;
+  /* Set the maximum height for the list */
+  overflow-y: auto;
+  /* Enable vertical scroll when content overflows */
+}
+
+.task_li {
+  margin-bottom: 30px;
+  background: none;
+  border: none;
+  outline: none;
+  width: auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 10px;
+  box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+  color: #fff;
+  flex-wrap: wrap;
+  display: inline-flex;
+  width: 100%;
+  justify-content: space-evenly;
+
+
+}
+
+
+#edit_btn,
+#delete_btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  /* Smooth transitions for background and text color */
+}
+
+#edit_btn {
+  margin: 10px;
+  color: rgb(0, 247, 164);
+  background-color: transparent;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+#delete_btn {
+  margin: 10px 0px 10px 50px;
+  color: rgb(255, 0, 0);
+  background-color: transparent;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+#edit_btn:hover {
+  background-color: rgba(71, 212, 231, 0.336);
+  color: rgb(2, 2, 2);
+}
+
+#delete_btn:hover {
+  background-color: rgba(255, 0, 0, 0.459);
+  color: rgb(2, 2, 2);
+}
+
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .main_container {
+    background-size: cover;
+  }
+
+  .task-card {
+    width: 90%;
+    /* Adjust the width for smaller screens */
+    padding: 10px;
+    /* Adjust the padding for smaller screens */
+    max-height: 650px;
+  }
+
+  #new-task-input {
+    margin-bottom: 30px;
+  }
+
+  .task_li {
+    margin: center;
+  }
+
+  .col-md-7 {
+    flex: 1;
+    /* Expand input field on smaller screens */
+  }
+
+  .col-md-2,
+  .col-md-3 {
+    flex: none;
+    /* Don't expand buttons on smaller screens */
+    width: 50%;
+    /* Make buttons take 50% width each */
+  }
+}

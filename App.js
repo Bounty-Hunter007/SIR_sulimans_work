@@ -1,21 +1,27 @@
-import './App.css';
-import { useState } from 'react';
+import "./App.css"; // Import your CSS file
+import { useState } from "react";
 
 function App() {
-                                      //states
   const [list, setList] = useState([]);
-  const [userInput, setUserInput] = useState('');
-  const [editIndex, setEditIndex] = useState(-1); // Initialize with -1 to indicate no editing
+  const [userInput, setUserInput] = useState("");
+  const [editMode, setEditMode] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState();
 
-  function addItem() {
+  function userInput_Func(e) {
+    setUserInput(e.target.value);
+  }
+
+  function addItem_Func() {
     const tempList = [...list];
     tempList.push(userInput);
     setList(tempList);
-    setUserInput('');
+    setUserInput("");
   }
 
-  function UserInput_func(e) {
-    setUserInput(e.target.value);
+  function deleteAll_Func() {
+    const tempList = [...list];
+    tempList.splice(0, list.length);
+    setList(tempList);
   }
 
   function deleteItem(index) {
@@ -24,60 +30,99 @@ function App() {
     setList(tempList);
   }
 
-  function delete_All_func(index) {
-    const tempList = [...list];
-    tempList.splice( 0, tempList.length);
-    setList(tempList);
-  }
   function editItem(index) {
-    setEditIndex(index); // Set the index of the item being edited
-    setUserInput(list[index]); // Populate the input field with the current item text
+    const valuee = list[index];
+    setUserInput(valuee);
+    setEditMode(true);
+    setCurrentIndex(index);
   }
 
-  function saveEdit(index) {
+  function updateItem_Func() {
     const tempList = [...list];
-    tempList[index] = userInput;
+    tempList[currentIndex] = userInput;
     setList(tempList);
-    setEditIndex(-1); // Reset the edit index to indicate no editing
-    setUserInput('');
+    setEditMode(false);
+    setUserInput("");
   }
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>TO-DO LIST</h1>
+      <body>
+        <div className="main_container">
+          <div className="task-card">
+            <header className="task-list-header">
+              <h1 className="text-center">TO-DO LIST</h1>
+            </header>
+            <div>
+              <input
+                id="new-task-input"
+                onChange={userInput_Func}
+                placeholder="ENTER THE ITEMS"
+                value={userInput}
+              />
 
-        <body>
-          <p>
-            <p>
-              <input onChange={UserInput_func} placeholder='Enter items' value={userInput} />
-              {editIndex === -1 //CONDITIONAL randering
-              ? ( <button onClick={addItem}>ADD ITEM</button>) //ternary operator
-              : ( <button onClick={() => saveEdit(editIndex)}>SAVE</button>)//ternary operator
-              } 
-              {<button onClick={delete_All_func}>DELETE ALL</button> }
-            </p>
-            <ol>
-              {list.map(function (item, index) {
-                return (
-                  <li key={index}>
-                    {index === editIndex//CONDITIONAL randering
-                     ? ( <input value={userInput} onChange={(e) => setUserInput(e.target.value)} />) //ternary operator
-                     : (item)//ternary operator
-                    }
-                    <button onClick={() => deleteItem(index)}>DELETE</button>
+              {!editMode ? (
+                <button
+                  onClick={addItem_Func}
+                  className="btn-primary"
+                  id="new-task-submit"
+                >
+                  ADD ITEM
+                </button>
+              ) : (
+                <button
+                  onClick={updateItem_Func}
+                  className="btn-primary"
+                  id="new-task-update"
+                >
+                  SAVE
+                </button>
+              )}
 
-                    {index === editIndex //CONDITIONAL randering
-                    ? ( <button onClick={() => saveEdit(index)}>SAVE</button>) //ternary opeator
-                    : ( <button onClick={() => editItem(index)}>EDIT</button>) //ternary opeator
-                    }
-                  </li>
-                );
-              })}
-            </ol>
-          </p>
-        </body>
-      </header>
+              <button
+                onClick={deleteAll_Func}
+                className="btn-danger"
+                id="new-task-REMOVE_ALL"
+              >
+                DELETE ALL
+              </button>
+            </div>
+
+            <section className="task-list" id="task-list">
+              <h2 className="H2">Tasks</h2>
+              <div className="text-center list " id="tasks_ol">
+                <ol id="tasks_ol">
+                  {list.map(function (item, index) {
+                    return (
+                      <li
+                        className="task_li"
+                        key={index}
+                        style={
+                          currentIndex === index && editMode
+                            ? { backgroundColor: "lightgreen" }
+                            : {}
+                        }
+                      >
+                        {item}
+
+                        <button
+                          id="delete_btn"
+                          onClick={() => deleteItem(index)}
+                        >
+                          Delete
+                        </button>
+                        <button id="edit_btn" onClick={() => editItem(index)}>
+                          Edit
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ol>
+              </div>
+            </section>
+          </div>
+        </div>
+      </body>
     </div>
   );
 }
